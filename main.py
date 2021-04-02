@@ -29,13 +29,15 @@ def take_command():
     return command
 
 def run_jarvis():
-    works = 0 # To define if Jarvis was able to provide some service or not
     # Infinite Loop for taking commands back to back unless Jarvis is asked to terminate
     while True:
+        works = 0  # To define if Jarvis was able to provide some service or not
         command = take_command()
+        command = command.lower()
         print(command)
-        if 'friday' or 'jarvis' or 'Hi jarvis' in command:
-            command = command.replace('jarvis' and 'friday', '')
+        if 'jarvis' in command:
+            command = command.replace('jarvis', '')
+            talk('Yes Sir..')
 
         # Different functions by Jarvis:
 
@@ -49,17 +51,17 @@ def run_jarvis():
             works = 1  # this command was fired
             time = datetime.datetime.now().strftime('%I:%M %p')
             talk(f"It's {time} now")
-        elif 'who is' or 'tell me about' in command:
+        if 'who is' in command:
             works=1 # this command was fired
-            person = command.replace('who is' and 'tell me about','')
+            person = command.replace('who is','')
             info = wikipedia.summary(person,1)
             talk(info)
-        elif 'joke' or 'jokes' in command:
+        if 'joke' in command:
             works =1 # this command was fired
             talk(pyjokes.get_joke())
         # Keep commands above this line...
         # Here the exit and exception handling is written
-        elif 'terminate' in command:
+        if 'terminate' in command:
             works = 1  # this command was fired
             talk("Okay! I'll take your leave sir...")
             break
